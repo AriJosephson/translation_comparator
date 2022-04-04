@@ -1,16 +1,39 @@
-import requests
-from json import load
+# Main imports go here
 
-with open('modular-seeker-345618-4d1b6f1ea15e.json') as json_file:
-    file_data = load(json_file)
-    almost = file_data['private_key'].strip('-----BEGIN PRIVATE KEY-----\n')
-    my_key = almost.strip('\n-----END PRIVATE KEY-----')
+# Import and set up Google Translate API.
+from google.cloud import translate
 
-print(my_key)
+project_id = "modular-seeker-345618"
+assert project_id
+parent = f"projects/{project_id}"
+client = translate.TranslationServiceClient.from_service_account_json("C:/Users/Ari/Documents/Code/Python/flask/iaste.json")
 
-response = requests.post('https://translation.googleapis.com/language/translate/v2', data = {'q':'test',
-                                                                                                   'target':'es',
-                                                                                                   'format':'text',
-                                                                                                   'key':my_key})
+def google_translate(text, target_language_code):
+    response = client.translate_text(
+    contents=[text],
+    target_language_code=target_language_code,
+    parent=parent)
 
-print(response)
+    return response
+
+# Import and set up txtai translation model.
+from txtai.pipeline import Translation
+
+# Create translation model
+translate = Translation()
+
+sample_text = "Hello world! This is a long text. Hopefully only one translation."
+target_language_code = "fr"
+
+language_list = ["ca","es","fr","ro"]
+
+for language in language_list:
+    for translation in google_translate(sample_text, language).translations:
+        print(translation.translated_text)
+
+
+languages = ["fr", "es", "de", "hi", "ja"]
+translations = [translate("The sky is blue, the stars are far", language) for language in languages]
+for i, text in enumerate(translations):
+    print(f"Original Language: {languages[i]}")
+    print(f"Translation: {text}")
