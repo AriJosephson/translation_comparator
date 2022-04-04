@@ -6,7 +6,7 @@ from google.cloud import translate
 project_id = "modular-seeker-345618"
 assert project_id
 parent = f"projects/{project_id}"
-client = translate.TranslationServiceClient.from_service_account_json("C:/Users/Ari/Documents/Code/Python/flask/iaste.json")
+client = translate.TranslationServiceClient.from_service_account_json("iaste.json")
 
 def google_translate(text, target_language_code):
     response = client.translate_text(
