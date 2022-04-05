@@ -3,8 +3,10 @@ from txtai.pipeline import Translation
 
 translate = Translation()
 
-# Languages only available in txtai
+from time import time
 start = time()
+
+# Languages only available in txtai
 
 print(translate("father", "ast"))
 print(translate("father", "ba"))
