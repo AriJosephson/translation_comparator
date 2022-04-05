@@ -33,7 +33,7 @@ for language in language_list:
 
 
 languages = ["fr", "es", "de", "hi", "ja"]
-translations = [translate("The sky is blue, the stars are far", language) for language in languages]
+translations = [translate("Hello world! This is a long text. Hopefully only one translation.", language) for language in languages]
 for i, text in enumerate(translations):
     print(f"Original Language: {languages[i]}")
     print(f"Translation: {text}")
